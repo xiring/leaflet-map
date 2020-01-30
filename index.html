@@ -1,0 +1,82 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title>Leaflet</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin=""/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+
+  <meta name="theme-color" content="#fafafa">
+  <style>
+    #mapid {
+      width: 100%;
+      height: 500px;
+    }
+    #distance {
+      background:rgba(0, 187, 255, 0.5);
+      color:#fff;
+      font-size:20px;
+      padding-left: 10px;
+      padding-right: 10px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body>
+<div id="mapid"></div>
+<div id="distance"></div>
+
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+<script src="leaflet-routing-machine.js"></script>
+
+<script>
+  // navigator.geolocation.getCurrentPosition(function(location) {
+  var latlng = new L.LatLng(27.7090319, 85.2911134);
+
+  var mymap = L.map('mapid').setView(latlng, 9)
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://mapbox.com">Mapbox</a>',
+      maxZoom: 18,
+      id: 'mapbox.streets',
+      accessToken: 'pk.eyJ1IjoieGlyaW5nbGFtYSIsImEiOiJjanNjcjVnZGgwbjBsM3lqbnR6NHA1bDhjIn0.xPtVmoyRNozWRotTSesZgA'
+    }).addTo(mymap);
+
+    var marker = L.marker(latlng).addTo(mymap);
+  // L.Routing.OSRM({ serviceUrl: 'http://127.0.0.1:5000/route/v1/driving' });
+  // L.Routing.control({
+  //   waypoints: [
+  //     L.latLng(27.6792996,85.3511558),
+  //     L.latLng(27.6777362,85.3511558)
+  //   ]
+  // }).addTo(mymap);
+  // });
+  var markerFrom = L.circleMarker([27.6484076, 85.3307247], { color: "#F00", radius: 10 });
+  var markerTo =  L.circleMarker([27.2054803,85.9101891], { color: "#4AFF00", radius: 10 });
+  var from = markerFrom.getLatLng();
+  var to = markerTo.getLatLng();
+  markerFrom.bindPopup('Vendor ' + (from).toString());
+  markerTo.bindPopup('Client ' + (to).toString());
+  mymap.addLayer(markerTo);
+  mymap.addLayer(markerFrom);
+  getDistance(from, to);
+
+  function getDistance(from, to)
+  {
+    var container = document.getElementById('distance');
+    container.innerHTML = ("Client to vendor - " + (from.distanceTo(to)).toFixed(0)/1000) + ' km';
+  }
+</script>
+</body>
+
+</html>
