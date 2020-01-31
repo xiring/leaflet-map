@@ -44,38 +44,40 @@
   // navigator.geolocation.getCurrentPosition(function(location) {
   var latlng = new L.LatLng(27.7090319, 85.2911134);
 
-  var mymap = L.map('mapid').setView(latlng, 9)
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+  var mymap = L.map('mapid').setView(latlng, 9);
+  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://mapbox.com">Mapbox</a>',
       maxZoom: 18,
       id: 'mapbox.streets',
       accessToken: 'pk.eyJ1IjoieGlyaW5nbGFtYSIsImEiOiJjanNjcjVnZGgwbjBsM3lqbnR6NHA1bDhjIn0.xPtVmoyRNozWRotTSesZgA'
-    }).addTo(mymap);
+  }).addTo(mymap);
 
-    var marker = L.marker(latlng).addTo(mymap);
-  // L.Routing.OSRM({ serviceUrl: 'http://127.0.0.1:5000/route/v1/driving' });
-  // L.Routing.control({
-  //   waypoints: [
-  //     L.latLng(27.6792996,85.3511558),
-  //     L.latLng(27.6777362,85.3511558)
-  //   ]
-  // }).addTo(mymap);
+  var marker = L.marker(latlng).addTo(mymap);
+  L.Routing.control({
+    waypoints: [
+      L.latLng(27.6484076, 85.3307247),
+      L.latLng(27.2054803,85.9101891)
+    ],
+    router: new L.Routing.OSRMv1({
+      serviceUrl: 'http://127.0.0.1:5000/route/v1'
+    })
+  }).addTo(mymap);
   // });
-  var markerFrom = L.circleMarker([27.6484076, 85.3307247], { color: "#F00", radius: 10 });
-  var markerTo =  L.circleMarker([27.2054803,85.9101891], { color: "#4AFF00", radius: 10 });
-  var from = markerFrom.getLatLng();
-  var to = markerTo.getLatLng();
-  markerFrom.bindPopup('Vendor ' + (from).toString());
-  markerTo.bindPopup('Client ' + (to).toString());
-  mymap.addLayer(markerTo);
-  mymap.addLayer(markerFrom);
-  getDistance(from, to);
-
-  function getDistance(from, to)
-  {
-    var container = document.getElementById('distance');
-    container.innerHTML = ("Client to vendor - " + (from.distanceTo(to)).toFixed(0)/1000) + ' km';
-  }
+  // var markerFrom = L.circleMarker([27.6484076, 85.3307247], { color: "#F00", radius: 8 });
+  // var markerTo =  L.circleMarker([27.2054803,85.9101891], { color: "#4AFF00", radius: 8 });
+  // var from = markerFrom.getLatLng();
+  // var to = markerTo.getLatLng();
+  // markerFrom.bindPopup('Vendor ' + (from).toString());
+  // markerTo.bindPopup('Client ' + (to).toString());
+  // mymap.addLayer(markerTo);
+  // mymap.addLayer(markerFrom);
+  // getDistance(from, to);
+  //
+  // function getDistance(from, to)
+  // {
+  //   var container = document.getElementById('distance');
+  //   container.innerHTML = ("Client to vendor - " + (from.distanceTo(to)).toFixed(0)/1000) + ' km';
+  // }
 </script>
 </body>
 
