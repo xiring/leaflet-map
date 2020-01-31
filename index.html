@@ -63,21 +63,21 @@
     })
   }).addTo(mymap);
   // });
-  // var markerFrom = L.circleMarker([27.6484076, 85.3307247], { color: "#F00", radius: 8 });
-  // var markerTo =  L.circleMarker([27.2054803,85.9101891], { color: "#4AFF00", radius: 8 });
-  // var from = markerFrom.getLatLng();
-  // var to = markerTo.getLatLng();
-  // markerFrom.bindPopup('Vendor ' + (from).toString());
-  // markerTo.bindPopup('Client ' + (to).toString());
-  // mymap.addLayer(markerTo);
-  // mymap.addLayer(markerFrom);
-  // getDistance(from, to);
-  //
-  // function getDistance(from, to)
-  // {
-  //   var container = document.getElementById('distance');
-  //   container.innerHTML = ("Client to vendor - " + (from.distanceTo(to)).toFixed(0)/1000) + ' km';
-  // }
+  var markerFrom = L.circleMarker([27.6484076, 85.3307247], { color: "#F00", radius: 8 });
+  var markerTo =  L.circleMarker([27.2054803,85.9101891], { color: "#4AFF00", radius: 8 });
+  var from = markerFrom.getLatLng();
+  var to = markerTo.getLatLng();
+  markerFrom.bindPopup('Vendor ' + (from).toString());
+  markerTo.bindPopup('Client ' + (to).toString());
+  mymap.addLayer(markerTo);
+  mymap.addLayer(markerFrom);
+  getDistance(from, to);
+  
+  function getDistance(from, to)
+  {
+    var container = document.getElementById('distance');
+    container.innerHTML = ("Client to vendor - " + (from.distanceTo(to)).toFixed(0)/1000) + ' km';
+  }
 </script>
 </body>
 
